@@ -1,0 +1,42 @@
+PODS:
+  - Module1 (1.0.0):
+    - RealmSwift (~> 10)
+    - RxSwift (= 6.5.0)
+  - Module2 (1.0.0):
+    - Swinject
+  - Realm (10.37.0):
+    - Realm/Headers (= 10.37.0)
+  - Realm/Headers (10.37.0)
+  - RealmSwift (10.37.0):
+    - Realm (= 10.37.0)
+  - RxSwift (6.5.0)
+  - Swinject (2.8.3)
+
+DEPENDENCIES:
+  - Module1 (from `Submodules/Module1`)
+  - Module2 (from `Submodules/Module2`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Realm
+    - RealmSwift
+    - RxSwift
+    - Swinject
+
+EXTERNAL SOURCES:
+  Module1:
+    :path: Submodules/Module1
+  Module2:
+    :path: Submodules/Module2
+
+SPEC CHECKSUMS:
+  Module1: 7593c5c15d13ae19bd3d33e91d05205aec0dca48
+  Module2: c51b50f4ea1563d5d034ed0cdb3576be36c0b02a
+  Realm: 9c5fc6f8f5cb70b299f2e3064d2b9f6cb0f1523d
+  RealmSwift: 7be7bb45911c16400dd1bfce3a01764ecb4cae7a
+  RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
+  Swinject: 893c9a543000ac2f10ee4cbaf0933c6992c935d5
+
+PODFILE CHECKSUM: 060dd2ea23e73732e7cc242bbcd3f84975153993
+
+COCOAPODS: 1.12.0
