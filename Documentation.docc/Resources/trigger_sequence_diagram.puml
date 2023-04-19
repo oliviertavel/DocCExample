@@ -1,0 +1,52 @@
+@startuml
+actor User
+participant BaseMobileAppDelegate [
+    =BaseMobileAppDelegate
+    ----
+    ""Bedrock""
+]
+participant PushManager [
+    =PushManager
+    ----
+    ""Push""  
+] 
+participant CustomerPushSolution [
+    =CustomerPushSolution
+    ----
+    ""CustomerPushSolutionKit""
+]
+participant "3rd Push SDK" as 3rdSDK
+
+User->BaseMobileAppDelegate: Register APNs
+activate BaseMobileAppDelegate
+BaseMobileAppDelegate->BaseMobileAppDelegate: didRegisterForRemoteNotificationsWithDeviceToken\ndidFailToRegisterForRemoteNotificationsWithError
+BaseMobileAppDelegate->PushManager: send to PushManager
+deactivate BaseMobileAppDelegate
+
+activate PushManager
+PushManager->CustomerPushSolution: send to PushSolution
+deactivate PushManager
+
+activate CustomerPushSolution
+CustomerPushSolution->3rdSDK: send to 3rd SDK
+deactivate CustomerPushSolution
+
+User->PushManager: Received Push
+activate PushManager
+PushManager->CustomerPushSolution: send to PushSolution
+deactivate PushManager
+
+activate CustomerPushSolution
+CustomerPushSolution->3rdSDK: send to 3rd SDK
+
+activate 3rdSDK
+group opt
+3rdSDK->CustomerPushSolution: notify DeepLinkDelegate
+CustomerPushSolution->BaseMobileAppDelegate: call UIApplication.shared.open(url)
+end
+3rdSDK->CustomerPushSolution: notify delegate
+deactivate 3rdSDK
+CustomerPushSolution-->PushManager: call CompletionHandler
+deactivate CustomerPushSolution
+
+@enduml

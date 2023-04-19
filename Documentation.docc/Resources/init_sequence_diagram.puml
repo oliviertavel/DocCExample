@@ -1,0 +1,40 @@
+@startuml
+
+actor User
+participant AppDelegate [
+    =AppDelegate
+    ----
+    ""CustomerMobile""
+]
+participant ConsentsDependenciesHandler [
+    =ConsentsDependenciesHandler
+    ----
+    ""CustomerCommon""  
+] 
+participant BaseMobileAppDelegate [
+    =BaseMobileAppDelegate
+    ----
+    ""Bedrock""
+]
+
+User->AppDelegate: Launch App
+
+activate AppDelegate
+AppDelegate->AppDelegate: call setupConsentsDependencies()
+AppDelegate->ConsentsDependenciesHandler: init ConsentsDependenciesHandler
+
+activate ConsentsDependenciesHandler
+ConsentsDependenciesHandler->ConsentsDependenciesHandler: Register in Bedrock.Configurator\nPushSolution\nPushSolutionAnalytics
+ConsentsDependenciesHandler->AppDelegate
+deactivate ConsentsDependenciesHandler
+
+AppDelegate->AppDelegate: setupConsents\npass PushManager completion\nto ConsentsProviderFactory
+AppDelegate->BaseMobileAppDelegate: call super.didFinishLaunchingWithOptions
+activate BaseMobileAppDelegate
+BaseMobileAppDelegate->BaseMobileAppDelegate: setupPush()\nregister PushManager\nPushManager.start()\nPushManager.register()
+BaseMobileAppDelegate->AppDelegate
+deactivate BaseMobileAppDelegate
+deactivate AppDelegate
+
+
+@enduml

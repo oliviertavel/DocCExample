@@ -1,0 +1,53 @@
+@startuml
+
+package Bedrock {
+    class Configurator {
+        + pushManager: PushManagerProtocol
+        + pushSolution: PushSolution
+    }
+
+    class PushSolutionAnalyticsTracker {
+        + pushSolutionAnalytics: PushSolutionAnalytics
+    }
+}
+
+package Analytics {
+    interface PushSolutionAnalytics
+}
+
+package Push {
+    interface PushManagerProtocol
+    interface PushSolution
+    interface PushDelegates
+
+    class PushManager {
+        + pushSolution: PushSolution
+    }
+}
+
+package CustomerPushSolution {
+    class CustomerPushAnalytics
+    class CustomerPushSolution
+}
+
+package CustomerApp {
+   class AppDelegate 
+}
+
+AppDelegate *-- Configurator
+
+Configurator *---- PushManagerProtocol
+Configurator *---- PushSolution
+
+PushSolutionAnalyticsTracker *-- PushSolutionAnalytics
+
+PushManager ..|> PushManagerProtocol
+PushManager ..|> PushDelegates
+PushManager *-- PushSolution
+
+CustomerPushSolution ..|> PushSolution
+CustomerPushSolution ..|> PushDelegates
+
+CustomerPushAnalytics ..|> PushSolutionAnalytics
+
+@enduml
